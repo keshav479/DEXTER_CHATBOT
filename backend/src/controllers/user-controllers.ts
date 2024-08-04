@@ -34,12 +34,12 @@ export const userSignup = async (req: Request, res: Response, next: NextFunction
             path : "/",
         });
 
-        const token = createToken((await user)._id.toString(), (await user).email, "7d");
+        const token = createToken( user._id.toString(),  user.email, "7d");
         const expires = new Date();
         expires.setDate(expires.getDate() + 7);
         res.cookie(COOKIE_NAME , token, { path: "/", domain: "localhost", expires, httpOnly: true, signed: true, });
 
-        return res.status(201).json({ message: "OK", id: user._id.toString() });
+        return res.status(201).json({ message: "OK", name: user.name, email: user.email});
 
 
     } catch (error) {
@@ -56,8 +56,8 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
         if (!user) {
             return res.status(401).send("User not registered");
         }
-        //comment out isPasswordCorrect if the error occurs
-        const isPasswordCorrect = await compare(password, (await user).password);
+        // comment out isPasswordCorrect if the error occurs
+        const isPasswordCorrect = await compare(password,  (await user).password);
         if (!isPasswordCorrect) {
             return res.status(403).send("Incorrect Password");
         }
@@ -68,16 +68,16 @@ export const userLogin = async (req: Request, res: Response, next: NextFunction)
             path : "/",
         });
 
-        const token = createToken((await user)._id.toString(), (await user).email, "7d");
+        const token = createToken( (await user)._id.toString(),  (await user).email, "7d");
         const expires = new Date();
         expires.setDate(expires.getDate() + 7);
         res.cookie(COOKIE_NAME , token, { path: "/", domain: "localhost", expires, httpOnly: true, signed: true, });
 
-        return res.status(201).json({ message: "OK", id: (await user)._id.toString() });
+        return res.status(201).json({ message: "OK", name: (await user).name, email: (await user).email });
         // return res.status(200).json({ message: "WORKED" });
 
     } catch (error) {
         console.log(error);
-        return res.status(200).json({ message: "Worked" /* ERROR */, cause: error.message });
+        return res.status(200).json({ message: "WORKED" /* ERROR */, cause: error.message });
     }
 }
