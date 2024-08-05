@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { loginUser } from "../helpers/api-communicator";
+import { checkAuthStatus, loginUser } from "../helpers/api-communicator";
 
 type User = {
     name: string;
@@ -20,16 +20,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     useEffect(() => {
         // fetch if the user cookies are valid skip login
+        async function checkStatus() {
+            const data = await checkAuthStatus();
+            if (data) {
+                setUser({ email: data.email, name: data.name });
+                setisLoggedIn(true);
+            }
+        }
+        checkStatus();
     }, []);
-    const login = async(email: string, password: string) =>{
+    const login = async (email: string, password: string) => {
         const data = await loginUser(email, password);
-        if (data){
-            setUser({email:data.email, name:data.name})
+        if (data) {
+            setUser({ email: data.email, name: data.name })
             setisLoggedIn(true);
         }
     };
-    const signup = async(name: string, email: string, password: string) =>{};
-    const logout = async() =>{};
+    const signup = async (name: string, email: string, password: string) => { };
+    const logout = async () => { };
 
     const value = {
         user,
@@ -37,9 +45,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         login,
         logout,
         signup,
-      };
-      return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-      
+    };
+    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+
 };
 
 export const useAuth = () => useContext(AuthContext);

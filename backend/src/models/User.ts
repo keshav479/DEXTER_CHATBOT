@@ -15,10 +15,6 @@ const chatSchema = new mongoose.Schema({
 });
 
 const userSchema = new mongoose.Schema({
-    // id:{
-    //     type:String,
-    //     default:randomUUID(),
-    // },
     name:{
         type: String,
         required: true,
