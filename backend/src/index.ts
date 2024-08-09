@@ -7,6 +7,6 @@ connectToDatabase().then(() => {
 // app.get("/hello",(req,res,next)=>{
 //     return res.send("HEYYY");
 // })
-app.listen(PORT, () => console.log("Server open and conected to database 👍"));
+app.listen(3008, () => console.log("Server open and conected to database 👍"));
 
 }).catch(err => console.log(err));
