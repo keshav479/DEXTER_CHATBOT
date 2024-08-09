@@ -6,4 +6,4 @@ export const configureOpenAI = () => {
     organization: process.env.OPENAI_ORAGANIZATION_ID,
   });
   return config;
-};
+}; 
