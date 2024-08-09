@@ -9,6 +9,6 @@ var app = (0, express_1.default)();
 //middleware
 app.use(express_1.default.json());
 //remove it in production
-app.use((0, morgan_1.default)("dev"));
+
 app.use("/api/v1", index_js_1.default);
 exports.default = app;
