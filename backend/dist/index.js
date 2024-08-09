@@ -2,7 +2,7 @@ import app from "./app.js";
 import { connectToDatabase } from "./db/connection.js";
 import * as dotenv from 'dotenv';
 dotenv.config();
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3004;
 connectToDatabase().then(() => {
     // app.get("/hello",(req,res,next)=>{
     //     return res.send("HEYYY");
